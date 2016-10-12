@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SampleKSIDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="KRS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nim" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Kode" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mahasiswa">
+          <Key>
+            <PropertyRef Name="Nim" />
+          </Key>
+          <Property Name="Nim" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Nama" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IPK" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Matakuliah">
+          <Key>
+            <PropertyRef Name="Kode" />
+          </Key>
+          <Property Name="Kode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Nama" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sks" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_KRS_Mahasiswa">
+          <End Role="Mahasiswa" Type="Self.Mahasiswa" Multiplicity="1" />
+          <End Role="KRS" Type="Self.KRS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mahasiswa">
+              <PropertyRef Name="Nim" />
+            </Principal>
+            <Dependent Role="KRS">
+              <PropertyRef Name="Nim" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KRS_Matakuliah">
+          <End Role="Matakuliah" Type="Self.Matakuliah" Multiplicity="1" />
+          <End Role="KRS" Type="Self.KRS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matakuliah">
+              <PropertyRef Name="Kode" />
+            </Principal>
+            <Dependent Role="KRS">
+              <PropertyRef Name="Kode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SampleKSIDbModelStoreContainer">
+          <EntitySet Name="KRS" EntityType="Self.KRS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mahasiswa" EntityType="Self.Mahasiswa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matakuliah" EntityType="Self.Matakuliah" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_KRS_Mahasiswa" Association="Self.FK_KRS_Mahasiswa">
+            <End Role="Mahasiswa" EntitySet="Mahasiswa" />
+            <End Role="KRS" EntitySet="KRS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KRS_Matakuliah" Association="Self.FK_KRS_Matakuliah">
+            <End Role="Matakuliah" EntitySet="Matakuliah" />
+            <End Role="KRS" EntitySet="KRS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SampleKSIDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="KRS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nim" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Mahasiswa" Relationship="Self.FK_KRS_Mahasiswa" FromRole="KRS" ToRole="Mahasiswa" />
+          <NavigationProperty Name="Matakuliah" Relationship="Self.FK_KRS_Matakuliah" FromRole="KRS" ToRole="Matakuliah" />
+        </EntityType>
+        <EntityType Name="Mahasiswa">
+          <Key>
+            <PropertyRef Name="Nim" />
+          </Key>
+          <Property Name="Nim" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nama" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IPK" Type="Double" Nullable="false" />
+          <NavigationProperty Name="KRS" Relationship="Self.FK_KRS_Mahasiswa" FromRole="Mahasiswa" ToRole="KRS" />
+        </EntityType>
+        <EntityType Name="Matakuliah">
+          <Key>
+            <PropertyRef Name="Kode" />
+          </Key>
+          <Property Name="Kode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nama" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sks" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="KRS" Relationship="Self.FK_KRS_Matakuliah" FromRole="Matakuliah" ToRole="KRS" />
+        </EntityType>
+        <Association Name="FK_KRS_Mahasiswa">
+          <End Role="Mahasiswa" Type="Self.Mahasiswa" Multiplicity="1" />
+          <End Role="KRS" Type="Self.KRS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mahasiswa">
+              <PropertyRef Name="Nim" />
+            </Principal>
+            <Dependent Role="KRS">
+              <PropertyRef Name="Nim" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KRS_Matakuliah">
+          <End Role="Matakuliah" Type="Self.Matakuliah" Multiplicity="1" />
+          <End Role="KRS" Type="Self.KRS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matakuliah">
+              <PropertyRef Name="Kode" />
+            </Principal>
+            <Dependent Role="KRS">
+              <PropertyRef Name="Kode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SampleKSIDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="KRS" EntityType="Self.KRS" />
+          <EntitySet Name="Mahasiswa" EntityType="Self.Mahasiswa" />
+          <EntitySet Name="Matakuliah" EntityType="Self.Matakuliah" />
+          <AssociationSet Name="FK_KRS_Mahasiswa" Association="Self.FK_KRS_Mahasiswa">
+            <End Role="Mahasiswa" EntitySet="Mahasiswa" />
+            <End Role="KRS" EntitySet="KRS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KRS_Matakuliah" Association="Self.FK_KRS_Matakuliah">
+            <End Role="Matakuliah" EntitySet="Matakuliah" />
+            <End Role="KRS" EntitySet="KRS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SampleKSIDbModelStoreContainer" CdmEntityContainer="SampleKSIDbEntities">
+          <EntitySetMapping Name="KRS">
+            <EntityTypeMapping TypeName="SampleKSIDbModel.KRS">
+              <MappingFragment StoreEntitySet="KRS">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nim" ColumnName="Nim" />
+                <ScalarProperty Name="Kode" ColumnName="Kode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mahasiswa">
+            <EntityTypeMapping TypeName="SampleKSIDbModel.Mahasiswa">
+              <MappingFragment StoreEntitySet="Mahasiswa">
+                <ScalarProperty Name="Nim" ColumnName="Nim" />
+                <ScalarProperty Name="Nama" ColumnName="Nama" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IPK" ColumnName="IPK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matakuliah">
+            <EntityTypeMapping TypeName="SampleKSIDbModel.Matakuliah">
+              <MappingFragment StoreEntitySet="Matakuliah">
+                <ScalarProperty Name="Kode" ColumnName="Kode" />
+                <ScalarProperty Name="Nama" ColumnName="Nama" />
+                <ScalarProperty Name="Sks" ColumnName="Sks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
