@@ -18,7 +18,6 @@ namespace SampleEFWebAPI.Models
         public SampleKSIDbEntities()
             : base("name=SampleKSIDbEntities")
         {
-            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

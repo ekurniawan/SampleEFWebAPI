@@ -125,7 +125,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SampleKSIDbEntities" annotation:LazyLoadingEnabled="false">
+        <EntityContainer Name="SampleKSIDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="KRS" EntityType="Self.KRS" />
           <EntitySet Name="Mahasiswa" EntityType="Self.Mahasiswa" />
           <EntitySet Name="Matakuliah" EntityType="Self.Matakuliah" />
