@@ -42,13 +42,33 @@ namespace SampleEFWebAPI.Controllers
         }
 
         // PUT: api/Mahasiswa/5
-        public void Put(int id, [FromBody]string value)
+        public IHttpActionResult Put(string id,Mahasiswa mhs)
         {
+            try
+            {
+                MahasiswaDAL mhsDAL = new MahasiswaDAL();
+                mhsDAL.Update(id, mhs);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE: api/Mahasiswa/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(string id)
         {
+            try
+            {
+                MahasiswaDAL mhsDAL = new MahasiswaDAL();
+                mhsDAL.Delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

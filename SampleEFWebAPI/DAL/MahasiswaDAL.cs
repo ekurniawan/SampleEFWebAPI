@@ -72,6 +72,23 @@ namespace SampleEFWebAPI.DAL
             }
         }
 
+        public void Delete(string id)
+        {
+            var result = (from m in db.Mahasiswa
+                          where m.Nim == id
+                          select m).FirstOrDefault();
+
+            if (result != null)
+            {
+                db.Mahasiswa.Remove(result);
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("Data not found !");
+            }
+        }
+
 
     }
 }
