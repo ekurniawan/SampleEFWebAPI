@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+
 using System.Web.Http.Cors;
 
 namespace SampleEFWebAPI
@@ -28,13 +29,18 @@ namespace SampleEFWebAPI
             );
 
             //cors setting
-            var cors = new EnableCorsAttribute("www.example.com", "*", "*");
+            var cors = new EnableCorsAttribute("http://localhost:54317/", "*", "*");
             config.EnableCors(cors);
 
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
             //setting untuk serialisasi EF Database First
-            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = 
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            //config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling =
+            //    Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+            //config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling =
+            //    Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            config.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
         }
     }
 }

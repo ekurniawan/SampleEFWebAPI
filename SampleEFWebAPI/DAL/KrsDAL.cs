@@ -18,6 +18,7 @@ namespace SampleEFWebAPI.DAL
 
         public IQueryable<KRS> GetAll()
         {
+            
             var results = from k in db.KRS.Include("Matakuliah").Include("Mahasiswa")
                           select k;
 

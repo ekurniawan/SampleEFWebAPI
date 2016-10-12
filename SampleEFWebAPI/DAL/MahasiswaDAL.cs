@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 using SampleEFWebAPI.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace SampleEFWebAPI.DAL
 {
@@ -18,6 +19,7 @@ namespace SampleEFWebAPI.DAL
 
         public IQueryable<Mahasiswa> GetAll()
         {
+            db.Configuration.LazyLoadingEnabled = false;
             var results = from m in db.Mahasiswa
                           orderby m.Nama ascending
                           select m;
@@ -29,6 +31,7 @@ namespace SampleEFWebAPI.DAL
 
         public Mahasiswa GetById(string id)
         {
+            db.Configuration.LazyLoadingEnabled = false;
             var result = (from m in db.Mahasiswa
                          where m.Nim == id
                          select m).FirstOrDefault();
@@ -46,9 +49,9 @@ namespace SampleEFWebAPI.DAL
                 db.Mahasiswa.Add(mhs);
                 db.SaveChanges();
             }
-            catch (Exception ex)
+            catch (DbUpdateException Ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception(Ex.Message);
             }
         }
 

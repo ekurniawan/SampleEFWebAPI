@@ -16,7 +16,7 @@ namespace SampleEFWebAPI.Controllers
         public IEnumerable<Mahasiswa> Get()
         {
             MahasiswaDAL mhsDAL = new MahasiswaDAL();
-            return mhsDAL.GetAll();
+            return mhsDAL.GetAll().ToList();
         }
 
         // GET: api/Mahasiswa/5

@@ -16,7 +16,7 @@ namespace SampleEFWebAPI.Controllers
         public IEnumerable<KRS> Get()
         {
             KrsDAL krsDal = new KrsDAL();
-            return krsDal.GetAll();
+            return krsDal.GetAll().ToList();
         }
 
         // GET: api/Krs/5
