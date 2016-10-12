@@ -20,14 +20,25 @@ namespace SampleEFWebAPI.Controllers
         }
 
         // GET: api/Mahasiswa/5
-        public string Get(int id)
+        public Mahasiswa Get(string id)
         {
-            return "value";
+            MahasiswaDAL mhsDAL = new MahasiswaDAL();
+            return mhsDAL.GetById(id);
         }
 
         // POST: api/Mahasiswa
-        public void Post([FromBody]string value)
+        public IHttpActionResult Post(Mahasiswa mhs)
         {
+            try
+            {
+                MahasiswaDAL mhsDAL = new MahasiswaDAL();
+                mhsDAL.Add(mhs);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT: api/Mahasiswa/5

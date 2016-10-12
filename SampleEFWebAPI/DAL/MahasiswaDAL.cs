@@ -38,5 +38,20 @@ namespace SampleEFWebAPI.DAL
             else
                 throw new Exception("Data not found !");
         }
+
+        public void Add(Mahasiswa mhs)
+        {
+            try
+            {
+                db.Mahasiswa.Add(mhs);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
     }
 }
