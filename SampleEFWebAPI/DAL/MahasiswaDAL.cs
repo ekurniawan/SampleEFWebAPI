@@ -52,6 +52,26 @@ namespace SampleEFWebAPI.DAL
             }
         }
 
+        public void Update(string id, Mahasiswa mhs)
+        {
+            var result = (from m in db.Mahasiswa
+                          where m.Nim == id
+                          select m).FirstOrDefault();
+
+            if (result != null)
+            {
+                result.Nama = mhs.Nama;
+                result.Email = mhs.Email;
+                result.IPK = mhs.IPK;
+
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("Data not found !");
+            }
+        }
+
 
     }
 }
