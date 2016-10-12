@@ -27,6 +27,9 @@ namespace SampleEFWebAPI
             );
 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
+            //setting untuk serialisasi EF Database First
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = 
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
     }
 }
