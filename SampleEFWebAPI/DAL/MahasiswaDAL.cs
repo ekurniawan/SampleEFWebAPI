@@ -26,5 +26,17 @@ namespace SampleEFWebAPI.DAL
 
             return results;
         }
+
+        public Mahasiswa GetById(string id)
+        {
+            var result = (from m in db.Mahasiswa
+                         where m.Nim == id
+                         select m).FirstOrDefault();
+
+            if (result != null)
+                return result;
+            else
+                throw new Exception("Data not found !");
+        }
     }
 }
