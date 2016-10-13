@@ -5,6 +5,8 @@ using System.Web;
 
 using SampleEFWebAPI.Models;
 using System.Data.Entity.Infrastructure;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace SampleEFWebAPI.DAL
 {
@@ -17,24 +19,24 @@ namespace SampleEFWebAPI.DAL
             db = new SampleKSIDbEntities();
         }
 
-        public IQueryable<Mahasiswa> GetAll()
+        public async Task<IEnumerable<Mahasiswa>> GetAll()
         {
             db.Configuration.LazyLoadingEnabled = false;
-            var results = from m in db.Mahasiswa
+            var results = await (from m in db.Mahasiswa.AsNoTracking()
                           orderby m.Nama ascending
-                          select m;
+                          select m).ToListAsync();
 
             //var results = db.Mahasiswa.OrderBy(m => m.Nama);
 
             return results;
         }
 
-        public Mahasiswa GetById(string id)
+        public async Task<Mahasiswa> GetById(string id)
         {
             db.Configuration.LazyLoadingEnabled = false;
-            var result = (from m in db.Mahasiswa
+            var result = await (from m in db.Mahasiswa.AsNoTracking()
                          where m.Nim == id
-                         select m).FirstOrDefault();
+                         select m).FirstOrDefaultAsync();
 
             if (result != null)
                 return result;
@@ -42,12 +44,12 @@ namespace SampleEFWebAPI.DAL
                 throw new Exception("Data not found !");
         }
 
-        public void Add(Mahasiswa mhs)
+        public async Task Add(Mahasiswa mhs)
         {
             try
             {
                 db.Mahasiswa.Add(mhs);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateException Ex)
             {
@@ -55,7 +57,7 @@ namespace SampleEFWebAPI.DAL
             }
         }
 
-        public void Update(string id, Mahasiswa mhs)
+        public async Task Update(string id, Mahasiswa mhs)
         {
             var result = (from m in db.Mahasiswa
                           where m.Nim == id
@@ -67,7 +69,7 @@ namespace SampleEFWebAPI.DAL
                 result.Email = mhs.Email;
                 result.IPK = mhs.IPK;
 
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             else
             {
@@ -75,7 +77,7 @@ namespace SampleEFWebAPI.DAL
             }
         }
 
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
             var result = (from m in db.Mahasiswa
                           where m.Nim == id
@@ -84,7 +86,7 @@ namespace SampleEFWebAPI.DAL
             if (result != null)
             {
                 db.Mahasiswa.Remove(result);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             else
             {

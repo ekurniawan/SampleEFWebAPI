@@ -7,32 +7,34 @@ using System.Web.Http;
 
 using SampleEFWebAPI.Models;
 using SampleEFWebAPI.DAL;
+using System.Threading.Tasks;
 
 namespace SampleEFWebAPI.Controllers
 {
     public class MahasiswaController : ApiController
     {
         // GET: api/Mahasiswa
-        public IEnumerable<Mahasiswa> Get()
+        public async Task<IEnumerable<Mahasiswa>> Get()
         {
             MahasiswaDAL mhsDAL = new MahasiswaDAL();
-            return mhsDAL.GetAll().ToList();
+            var results = await mhsDAL.GetAll();
+            return results;
         }
 
         // GET: api/Mahasiswa/5
-        public Mahasiswa Get(string id)
+        public async Task<Mahasiswa> Get(string id)
         {
             MahasiswaDAL mhsDAL = new MahasiswaDAL();
-            return mhsDAL.GetById(id);
+            return await mhsDAL.GetById(id);
         }
 
         // POST: api/Mahasiswa
-        public IHttpActionResult Post(Mahasiswa mhs)
+        public async Task<IHttpActionResult> Post(Mahasiswa mhs)
         {
             try
             {
                 MahasiswaDAL mhsDAL = new MahasiswaDAL();
-                mhsDAL.Add(mhs);
+                await mhsDAL.Add(mhs);
                 return Ok();
             }
             catch (Exception ex)
@@ -42,12 +44,12 @@ namespace SampleEFWebAPI.Controllers
         }
 
         // PUT: api/Mahasiswa/5
-        public IHttpActionResult Put(string id,Mahasiswa mhs)
+        public async Task<IHttpActionResult> Put(string id,Mahasiswa mhs)
         {
             try
             {
                 MahasiswaDAL mhsDAL = new MahasiswaDAL();
-                mhsDAL.Update(id, mhs);
+                await mhsDAL.Update(id, mhs);
                 return Ok();
             }
             catch (Exception ex)
@@ -57,12 +59,12 @@ namespace SampleEFWebAPI.Controllers
         }
 
         // DELETE: api/Mahasiswa/5
-        public IHttpActionResult Delete(string id)
+        public async Task<IHttpActionResult> Delete(string id)
         {
             try
             {
                 MahasiswaDAL mhsDAL = new MahasiswaDAL();
-                mhsDAL.Delete(id);
+                await mhsDAL.Delete(id);
                 return Ok();
             }
             catch (Exception ex)
