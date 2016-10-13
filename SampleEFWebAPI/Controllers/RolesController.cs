@@ -9,6 +9,7 @@ using SampleEFWebAPI.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
 
 namespace SampleEFWebAPI.Controllers
 {
@@ -26,6 +27,19 @@ namespace SampleEFWebAPI.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        public async Task<IHttpActionResult> AddUserToRole(string roleName, string userId)
+        {
+            try
+            {
+                await UserManager.AddToRoleAsync(userId, roleName);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
@@ -65,10 +79,7 @@ namespace SampleEFWebAPI.Controllers
             }
         }
 
-        public IHttpActionResult AddUserToRole(string roleName,string userId)
-        {
-            
-        }
+        
 
         // PUT: api/Roles/5
         public void Put(int id, [FromBody]string value)
