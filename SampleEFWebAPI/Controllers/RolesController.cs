@@ -30,6 +30,8 @@ namespace SampleEFWebAPI.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/Roles/AddUserToRole")]
         public async Task<IHttpActionResult> AddUserToRole(string roleName, string userId)
         {
             try
