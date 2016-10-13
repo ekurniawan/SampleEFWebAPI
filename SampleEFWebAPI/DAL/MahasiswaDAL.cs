@@ -44,6 +44,17 @@ namespace SampleEFWebAPI.DAL
                 throw new Exception("Data not found !");
         }
 
+        public async Task<IEnumerable<Mahasiswa>> GetMahasiswaByNama(string nama)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+
+            var results = await (from m in db.Mahasiswa
+                                 where m.Nama.ToLower().Contains(nama.ToLower())
+                                 select m).ToListAsync();
+
+            return results;
+        }
+
         public async Task Add(Mahasiswa mhs)
         {
             try
