@@ -30,13 +30,14 @@ namespace SampleEFWebAPI.Controllers
             }
         }
 
-        [HttpPost]
+        
         [Route("api/Roles/AddUserToRole")]
-        public async Task<IHttpActionResult> AddUserToRole(string roleName, string userId)
+        [HttpPost]
+        public async Task<IHttpActionResult> AddUserToRole(AddToRoleViewModel model)
         {
             try
             {
-                await UserManager.AddToRoleAsync(userId, roleName);
+                await UserManager.AddToRoleAsync(model.UserId, model.RoleName);
                 return Ok();
             }
             catch (Exception ex)
@@ -44,6 +45,7 @@ namespace SampleEFWebAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         // GET: api/Roles
         public IEnumerable<string> Get()
