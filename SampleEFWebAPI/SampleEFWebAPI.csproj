@@ -246,6 +246,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KrsController.cs" />
     <Compile Include="Controllers\MahasiswaController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\KrsDAL.cs" />
     <Compile Include="DAL\MahasiswaDAL.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Models\Matakuliah.cs">
       <DependentUpon>SampleKSIDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\SampleKSIDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

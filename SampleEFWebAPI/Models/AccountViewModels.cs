@@ -40,4 +40,6 @@ namespace SampleEFWebAPI.Models
 
         public string ProviderKey { get; set; }
     }
+
+    
 }

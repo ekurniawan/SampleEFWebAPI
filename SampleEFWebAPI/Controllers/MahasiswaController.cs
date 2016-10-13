@@ -14,6 +14,7 @@ namespace SampleEFWebAPI.Controllers
     public class MahasiswaController : ApiController
     {
         // GET: api/Mahasiswa
+        [Authorize(Users ="erick@gmail.com")]
         public async Task<IEnumerable<Mahasiswa>> Get()
         {
             MahasiswaDAL mhsDAL = new MahasiswaDAL();
@@ -22,6 +23,7 @@ namespace SampleEFWebAPI.Controllers
         }
 
         // GET: api/Mahasiswa/5
+        [Authorize]
         public async Task<Mahasiswa> Get(string id)
         {
             MahasiswaDAL mhsDAL = new MahasiswaDAL();
