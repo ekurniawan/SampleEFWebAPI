@@ -28,6 +28,14 @@ namespace SampleEFWebAPI.Controllers
             return await mhsDAL.GetById(id);
         }
 
+
+        [Route("api/Mahasiswa/GetByNama/{nama}")]
+        public async Task<IEnumerable<Mahasiswa>> GetByNama(string nama)
+        {
+            MahasiswaDAL mhsDAL = new MahasiswaDAL();
+            return await mhsDAL.GetMahasiswaByNama(nama);
+        }
+
         // POST: api/Mahasiswa
         public async Task<IHttpActionResult> Post(Mahasiswa mhs)
         {

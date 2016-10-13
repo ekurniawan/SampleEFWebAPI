@@ -5,6 +5,7 @@ using System.Web;
 
 using SampleEFWebAPI.Models;
 using System.Data.Entity.Infrastructure;
+
 using System.Threading.Tasks;
 using System.Data.Entity;
 
@@ -51,7 +52,6 @@ namespace SampleEFWebAPI.DAL
             var results = await (from m in db.Mahasiswa
                                  where m.Nama.ToLower().Contains(nama.ToLower())
                                  select m).ToListAsync();
-
             return results;
         }
 
