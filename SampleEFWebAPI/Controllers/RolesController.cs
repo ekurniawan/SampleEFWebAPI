@@ -8,10 +8,27 @@ using System.Web.Http;
 using SampleEFWebAPI.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
+using Microsoft.AspNet.Identity.Owin;
+
 namespace SampleEFWebAPI.Controllers
 {
     public class RolesController : ApiController
     {
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? 
+                    Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         // GET: api/Roles
         public IEnumerable<string> Get()
         {
@@ -26,7 +43,7 @@ namespace SampleEFWebAPI.Controllers
 
         // POST: api/Roles
         //menambahkan role baru
-        public void Post(RoleViewModel model)
+        public IHttpActionResult Post(RoleViewModel model)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -39,12 +56,18 @@ namespace SampleEFWebAPI.Controllers
                 {
                     db.Roles.Add(newRole);
                     db.SaveChanges();
+                    return Ok();
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(ex.Message);
+                    return BadRequest(ex.Message);
                 }
             }
+        }
+
+        public IHttpActionResult AddUserToRole(string roleName,string userId)
+        {
+            
         }
 
         // PUT: api/Roles/5
