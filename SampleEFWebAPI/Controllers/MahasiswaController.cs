@@ -14,7 +14,7 @@ namespace SampleEFWebAPI.Controllers
     public class MahasiswaController : ApiController
     {
         // GET: api/Mahasiswa
-        [Authorize(Users ="erick@gmail.com")]
+        [Authorize(Roles ="Mahasiswa,Admin")]
         public async Task<IEnumerable<Mahasiswa>> Get()
         {
             MahasiswaDAL mhsDAL = new MahasiswaDAL();
@@ -23,7 +23,7 @@ namespace SampleEFWebAPI.Controllers
         }
 
         // GET: api/Mahasiswa/5
-        [Authorize]
+        [Authorize(Roles ="Mahasiswa,Admin")]
         public async Task<Mahasiswa> Get(string id)
         {
             MahasiswaDAL mhsDAL = new MahasiswaDAL();
@@ -31,6 +31,7 @@ namespace SampleEFWebAPI.Controllers
         }
 
 
+        
         [Route("api/Mahasiswa/GetByNama/{nama}")]
         public async Task<IEnumerable<Mahasiswa>> GetByNama(string nama)
         {
@@ -38,6 +39,8 @@ namespace SampleEFWebAPI.Controllers
             return await mhsDAL.GetMahasiswaByNama(nama);
         }
 
+
+        [Authorize(Roles = "Admin")]
         // POST: api/Mahasiswa
         public async Task<IHttpActionResult> Post(Mahasiswa mhs)
         {
@@ -53,6 +56,7 @@ namespace SampleEFWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         // PUT: api/Mahasiswa/5
         public async Task<IHttpActionResult> Put(string id,Mahasiswa mhs)
         {
@@ -68,6 +72,7 @@ namespace SampleEFWebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         // DELETE: api/Mahasiswa/5
         public async Task<IHttpActionResult> Delete(string id)
         {
